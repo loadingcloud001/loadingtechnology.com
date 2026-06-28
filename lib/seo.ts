@@ -9,7 +9,7 @@ export const siteConfig = {
   description:
     '天・人・地・雲 — 工地智能化方案。CCTV、智能頭盔、氣體偵測、CMP 統一管理平台。',
   url: SITE_URL,
-  ogImage: `${SITE_URL}/og-default.png`,
+  ogImage: `${SITE_URL}/opengraph-image`,
   locale: 'zh-HK',
   twitter: '@loadingtech',
   email: 'sales@loadingtechnology.com',
