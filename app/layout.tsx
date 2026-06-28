@@ -3,6 +3,8 @@ import { Inter, Noto_Sans_TC, JetBrains_Mono } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { ThemeProvider } from '@/components/theme/ThemeProvider'
+import { LocaleProvider } from '@/components/i18n/LocaleProvider'
 import { siteConfig, buildMetadata } from '@/lib/seo'
 import './globals.css'
 
@@ -53,6 +55,18 @@ const organizationLd = {
   },
 }
 
+// 防止 dark mode flash — 在 head 內塞 inline script
+const themeScript = `
+(function() {
+  try {
+    var stored = localStorage.getItem('loading-tech-theme');
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var theme = stored || (prefersDark ? 'dark' : 'light');
+    if (theme === 'dark') document.documentElement.classList.add('dark');
+  } catch (e) {}
+})();
+`
+
 export default function RootLayout({
   children,
 }: {
@@ -61,13 +75,21 @@ export default function RootLayout({
   return (
     <html
       lang="zh-HK"
+      suppressHydrationWarning
       className={`${inter.variable} ${notoTC.variable} ${jetbrains.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-screen flex flex-col bg-background text-foreground">
         <JsonLd data={organizationLd} />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <ThemeProvider>
+          <LocaleProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </LocaleProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

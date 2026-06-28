@@ -118,6 +118,25 @@
 }
 
 /* ============================================
+   Dark Mode — 預設配色
+   ============================================ */
+@layer base {
+  .dark {
+    --color-background: #0B1220;
+    --color-foreground: #F1F5F9;
+    --color-muted: #94A3B8;
+    --color-border: #1E293B;
+    --color-ink-50: #0F172A;
+    --color-ink-100: #1E293B;
+    --color-ink-200: #334155;
+    --color-ink-300: #475569;
+    --color-ink-500: #94A3B8;
+    --color-ink-700: #CBD5E1;
+    --color-ink-900: #F1F5F9;
+  }
+}
+
+/* ============================================
    Base Layer
    ============================================ */
 @layer base {
@@ -132,6 +151,7 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -189,6 +209,10 @@
            shadow-sm
            transition-all duration-200
            hover:shadow-md hover:border-brand-100;
+  }
+
+  .dark .card {
+    @apply bg-ink-100 border-ink-200 hover:border-brand-500/30;
   }
 
   .gradient-text {
